@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>TidyTuesday</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Joe Roberts" />
+    <link href="libs/font-awesome-5.3.1/css/fontawesome-all.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="xaringan-themer.css" type="text/css" />
+    <link rel="stylesheet" href="custom.css" type="text/css" />
+  </head>
+  <body>
+    <textarea id="source">
+
+
+
+
+
+
+class: title-slide, center, bottom
+
+background-image: url(https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/static/tt_logo.png)
+background-size: 1000px
+background-position: 50% 10%
+
+
+### Joe Roberts 
+
+#### Harper Adams R Users Group &amp;#183; 2020-04-13
+
+---
+
+class: inverse, right, bottom
+
+
+&lt;img style="border-radius: 50%;" src="https://github.com/dr-joe-roberts.png" width="200px"/&gt;
+
+# Where to find me...
+
+.medium[
+[<i class="fab  fa-github "></i> Dr-Joe-Roberts](https://github.com/Dr-Joe-Roberts)  
+[<i class="fab  fa-twitter "></i> Dr_Joe_Roberts](https://twitter.com/Dr_Joe_Roberts)  
+[<i class="fas  fa-paper-plane "></i> jroberts@harper-adams.ac.uk](mailto:jroberts@harper-adams.ac.uk)
+]
+
+---
+
+class: left, middle
+
+# Learning outcomes
+
+---
+
+class: left, top
+
+background-image: url(https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png)
+background-size: 1200px
+background-position: 50% 90%
+
+# Tidy data 🧹
+
+.medium[ 
+- Data can be presented in many different formats
+
+- Tidy data is usually the easiest format to use with R 
+
+- Core principle for the `tidyverse` suite of packages
+]
+
+---
+
+class: left, top
+
+background-image: url(https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png)
+background-size: 1200px
+background-position: 50% 90%
+
+# Activity 1  (10 mins) ⌛
+
+.medium[ 
+- I am about to share a .xlsx file via MS Teams chat
+
+- Turn this file into a tidy data set using the 3 rules below
+
+- Hint: data dictionaries should be in a separate tab
+]
+
+---
+
+class: left, top
+
+# Activity 1 - my thoughts 🤔
+
+
+
+
+```r
+head(aphid_data, 18)
+```
+
+```
+##    sample_ID sample     species                 rt peak_area concentration
+## 1    CG19-14  Plant Brevicoryne             16.247    154123      9.375757
+## 2    CG19-23  Plant Brevicoryne 16.239999999999998     77839      4.735176
+## 3    CG19-24  Plant Brevicoryne 16.242999999999999    204238     12.424400
+## 4    CG19-09  Plant       Myzus             16.241   4783237    290.978422
+## 5    CG19-13  Plant       Myzus 16.245000000000001   2653330    161.409894
+## 6    CG19-26  Plant       Myzus 16.239999999999998   3224152    196.134680
+## 7    CG19-28  AD+SA Brevicoryne 16.239999999999998    295414     17.970905
+## 8    CG19-31  AD+SA Brevicoryne 16.239999999999998    298222     18.141724
+## 9    CG19-34  AD+SA Brevicoryne 16.242000000000001    192785     11.727680
+## 10   CG19-30  AD-SA Brevicoryne                N/A         0      0.000000
+## 11   CG19-32  AD-SA Brevicoryne             16.238     33358      2.029266
+## 12   CG19-33  AD-SA Brevicoryne 16.236999999999998     34018      2.069415
+## 13   CG19-15  AD+SA       Myzus 16.242999999999999   4034920    245.456090
+## 14   CG19-18  AD+SA       Myzus 16.242000000000001   2442438    148.580711
+## 15   CG19-22  AD+SA       Myzus 16.242000000000001   5650064    343.710066
+## 16   CG19-17  AD-SA       Myzus 16.242000000000001     51450      3.129855
+## 17   CG19-20  AD-SA       Myzus 16.242000000000001    846354     51.486211
+## 18   CG19-21  AD-SA       Myzus             16.244    110176      6.702331
+```
+
+---
+
+class: left, middle
+
+# What is Tidy Tuesday?
+
+&gt; A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the `R for Data Science` textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
+
+&lt;br&gt;
+
+.medium[
+- Data sets are uploaded to the Tidy Tuesday [GitHub repository](https://github.com/rfordatascience/tidytuesday) 
+
+- Uploads contain data background, download instructions and a data dictionary
+
+- Data are not always tidy - some wrangling is usually required!
+
+- Let's look at a Tidy Tuesday data set...
+]
+
+---
+
+class: left, middle
+
+# Food Consumption and CO2 
+
+&gt; This data on annual CO2 emissions per person for 130 nations worldwide was originally compiled by the Food and Agriculture Organization of the United Nations (FAO) in 2018. On 2020-02-18 it was uploaded as a .csv file to the Tidy Tuesday [GitHub repository](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md).
+
+---
+
+class: left, middle
+
+# What does this data set contain?
+
+
+
+--
+
+
+```r
+glimpse(food_consumption)  # Similar to print in base R - great to look at data
+```
+
+```
+## Rows: 1,430
+## Columns: 4
+## $ country       &lt;chr&gt; "Argentina", "Argentina", "Arg…
+## $ food_category &lt;chr&gt; "Pork", "Poultry", "Beef", "La…
+## $ consumption   &lt;dbl&gt; 10.51, 38.66, 55.48, 1.56, 4.3…
+## $ co2_emmission &lt;dbl&gt; 37.20, 41.53, 1712.00, 54.63, …
+```
+
+--
+
+|Variable      |Class     |Description |
+|:-------------|:---------|:-----------|
+|country       |character | Country Name |
+|food_category |character | Food Category |
+|consumption   |double    | Consumption (kg/person/year) |
+|co2_emmission |double    | Co2 Emission (Kg CO2/person/year) |
+
+---
+
+class: left, middle
+
+# Activity 2  (20 mins) ⌛
+
+.medium[ 
+- Let's start with a question - which food category has the largest CO2 emissions?
+
+- We can answer this by visualising the data!
+
+- I want you to recreate the following plot where I have done exactly this
+
+- I will post the link to the data in the MS Teams chat
+]
+
+---
+
+class: center, middle
+
+&lt;img src="index_files/figure-html/food-type-emissions-1.svg" height="600px" /&gt;
+
+---
+
+count: false
+.pull-left-reveal[
+
+```r
+*food_consumption
+```
+]
+.pull-right-reveal[
+
+```
+## # A tibble: 1,430 x 4
+##    country  food_category     consumption co2_emmission
+##    &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Argenti… Pork                    10.5          37.2 
+##  2 Argenti… Poultry                 38.7          41.5 
+##  3 Argenti… Beef                    55.5        1712   
+##  4 Argenti… Lamb &amp; Goat              1.56         54.6 
+##  5 Argenti… Fish                     4.36          6.96
+##  6 Argenti… Eggs                    11.4          10.5 
+##  7 Argenti… Milk - inc. chee…      195.          278.  
+##  8 Argenti… Wheat and Wheat …      103.           19.7 
+##  9 Argenti… Rice                     8.77         11.2 
+## 10 Argenti… Soybeans                 0             0   
+## # … with 1,420 more rows
+```
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+* group_by(food_category)
+```
+]
+.pull-right-reveal[
+
+```
+## # A tibble: 1,430 x 4
+## # Groups:   food_category [11]
+##    country  food_category     consumption co2_emmission
+##    &lt;chr&gt;    &lt;chr&gt;                   &lt;dbl&gt;         &lt;dbl&gt;
+##  1 Argenti… Pork                    10.5          37.2 
+##  2 Argenti… Poultry                 38.7          41.5 
+##  3 Argenti… Beef                    55.5        1712   
+##  4 Argenti… Lamb &amp; Goat              1.56         54.6 
+##  5 Argenti… Fish                     4.36          6.96
+##  6 Argenti… Eggs                    11.4          10.5 
+##  7 Argenti… Milk - inc. chee…      195.          278.  
+##  8 Argenti… Wheat and Wheat …      103.           19.7 
+##  9 Argenti… Rice                     8.77         11.2 
+## 10 Argenti… Soybeans                 0             0   
+## # … with 1,420 more rows
+```
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+* summarise(total_co2 = sum(co2_emmission))
+```
+]
+.pull-right-reveal[
+
+```
+## # A tibble: 11 x 2
+##    food_category            total_co2
+##    &lt;chr&gt;                        &lt;dbl&gt;
+##  1 Beef                       48633. 
+##  2 Eggs                         975. 
+##  3 Fish                        3588. 
+##  4 Lamb &amp; Goat                11837. 
+##  5 Milk - inc. cheese         23290  
+##  6 Nuts inc. Peanut Butter      952. 
+##  7 Pork                        7419. 
+##  8 Poultry                     2963. 
+##  9 Rice                        4887. 
+## 10 Soybeans                      50.4
+## 11 Wheat and Wheat Products    1774.
+```
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  
+* ggplot(aes(x = reorder(food_category, total_co2), y = total_co2))
+```
+]
+.pull-right-reveal[
+![](index_files/figure-html/output_food-type-emissions-plot_4-1.svg)&lt;!-- --&gt;
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+* geom_col()
+```
+]
+.pull-right-reveal[
+![](index_files/figure-html/output_food-type-emissions-plot_5-1.svg)&lt;!-- --&gt;
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  geom_col() +  
+* coord_flip()
+```
+]
+.pull-right-reveal[
+![](index_files/figure-html/output_food-type-emissions-plot_6-1.svg)&lt;!-- --&gt;
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  geom_col() +  
+  coord_flip() +  
+* theme_bw(base_size = 12)
+```
+]
+.pull-right-reveal[
+![](index_files/figure-html/output_food-type-emissions-plot_7-1.svg)&lt;!-- --&gt;
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  geom_col() +  
+  coord_flip() +  
+  theme_bw(base_size = 12) +  
+* labs(x = "",
+*      y = "CO2 Emission (Kg CO2/person/year)",
+*      title = "Which food category has the highest CO2 emimssions?")
+```
+]
+.pull-right-reveal[
+![](index_files/figure-html/output_food-type-emissions-plot_10-1.svg)&lt;!-- --&gt;
+]
+
+
+
+---
+
+class: left, middle
+
+```
+# Data prep
+food_consumption %&gt;%  # Select the data frame
+  group_by(food_category) %&gt;%  # Group this data frame by food_category variable
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  # Create a new summary data frame
+# Plot data
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  # Plot the new data frame
+  geom_col() +  # Select plot type
+  coord_flip() +  # Rotate plot 90 degrees
+  theme_bw(base_size = 12) +  # Select theme
+  labs(x = "",  # Set x-axis label to blank
+  y = "CO2 Emission (Kg CO2/person/year)",  # Set y-axis label
+  title = "Which food category has the highest CO2 emimssions?")  # Set plot title
+```
+
+---
+
+class: left, middle
+
+# Challenge
+
+.medium[
+- Produce a data visualisation of your choice from the Food CO2 we looked at today
+
+- Make it as complicated or as simple as you like
+
+- The key is to think of a question you want answer using the data
+
+- Show and discuss at the next **HARUG** meeting (2020-04-29)
+]
+
+---
+
+class: left, middle
+
+# Useful resources for my challenge!
+
+#### 🌌 R for Data Science
+
+  - [R for Data Science](https://r4ds.had.co.nz/) - 🐦 Overview of most data science topics, with great tips
+
+#### 🎨 Visualization in R
+
+  - [Data Visualization](https://socviz.co) - 🐠 Communication oriented data visualization in R
+  - [R Graphics Cookbook](https://r-graphics.org/) - 🐙 Practical introduction to visualization with ggplot2
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLanguage": ["r", "yaml", "markdown"],
+"slideNumberFormat": "",
+"highlightLines": true,
+"countIncrementalSlides": false,
+"ratio": "16:9"
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>

@@ -1,0 +1,277 @@
+---
+title: "TidyTuesday"
+subtitle: "Carbon Footprint of Food"
+event: "Harper Adams R Users Group"
+date: "15-04-2020"
+author: "Joe Roberts"
+institute: "Harper Adams University"
+output:
+  xaringan::moon_reader:
+    seal: false
+    css: ["xaringan-themer.css", "custom.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLanguage: ["r", "yaml", "markdown"]
+      slideNumberFormat: ""
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: "16:9"
+---
+
+```{r xaringan-themer, include = FALSE}
+library(xaringanthemer)
+
+mono_accent(
+  base_color = "#1F4257",
+  header_font_google = google_font("Josefin Sans"),
+  text_font_google   = google_font("Montserrat", "300", "300i"),
+  code_font_google   = google_font("Droid Mono")
+)
+```
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(dev = "svglite")
+source(file = here::here("libs-reveal/xaringan_reveal_parentheses_balanced.R"))
+options(tibble.width = 55,
+        tibble.max_extra_cols = 20)
+
+library(showtext)
+library(tidyverse)
+library(openxlsx)
+library(here)
+```
+
+class: title-slide, center, bottom
+
+background-image: url(https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/static/tt_logo.png)
+background-size: 1000px
+background-position: 50% 10%
+
+
+### `r rmarkdown::metadata$author` 
+
+#### `r rmarkdown::metadata$event` &#183; `r Sys.Date()`
+
+---
+
+class: inverse, right, bottom
+
+
+<img style="border-radius: 50%;" src="https://github.com/dr-joe-roberts.png" width="200px"/>
+
+# Where to find me...
+
+.medium[
+[`r icon::fa("github")` Dr-Joe-Roberts](https://github.com/Dr-Joe-Roberts)  
+[`r icon::fa("twitter")` Dr_Joe_Roberts](https://twitter.com/Dr_Joe_Roberts)  
+[`r icon::fa("paper-plane")` jroberts@harper-adams.ac.uk](mailto:jroberts@harper-adams.ac.uk)
+]
+
+---
+
+class: left, middle
+
+# Learning outcomes
+
+---
+
+class: left, top
+
+background-image: url(https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png)
+background-size: 1200px
+background-position: 50% 90%
+
+# Tidy data `r emo::ji("broom")`
+
+.medium[ 
+- Data can be presented in many different formats
+
+- Tidy data is usually the easiest format to use with R 
+
+- Core principle for the `tidyverse` suite of packages
+]
+
+---
+
+class: left, top
+
+background-image: url(https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478e444ab8112fb0eea23f8/91adc/images/tidy-1.png)
+background-size: 1200px
+background-position: 50% 90%
+
+# Activity 1  (10 mins) `r emo::ji("hourglass")`
+
+.medium[ 
+- I am about to share a .xlsx file via MS Teams chat
+
+- Turn this file into a tidy data set using the 3 rules below
+
+- Hint: data dictionaries should be in a separate tab
+]
+
+---
+
+class: left, top
+
+# Activity 1 - my thoughts `r emo::ji("thinking")`
+
+```{r activity-1-data, include = FALSE}
+aphid_data <- read.xlsx("Activity 1 (Tidy).xlsx")
+```
+
+```{r activity-1-output}
+head(aphid_data, 18)
+```
+
+---
+
+class: left, middle
+
+# What is Tidy Tuesday?
+
+> A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the `R for Data Science` textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
+
+<br>
+
+.medium[
+- Data sets are uploaded to the Tidy Tuesday [GitHub repository](https://github.com/rfordatascience/tidytuesday) 
+
+- Uploads contain data background, download instructions and a data dictionary
+
+- Data are not always tidy - some wrangling is usually required!
+
+- Let's look at a Tidy Tuesday data set...
+]
+
+---
+
+class: left, middle
+
+# Food Consumption and CO2 
+
+> This data on annual CO2 emissions per person for 130 nations worldwide was originally compiled by the Food and Agriculture Organization of the United Nations (FAO) in 2018. On 2020-02-18 it was uploaded as a .csv file to the Tidy Tuesday [GitHub repository](https://github.com/rfordatascience/tidytuesday/blob/master/data/2020/2020-02-18/readme.md).
+
+---
+
+class: left, middle
+
+# What does this data set contain?
+
+```{r get-tt-data, message = FALSE, warning = FALSE, include = FALSE}
+food_consumption <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/master/data/2020/2020-02-18/food_consumption.csv')
+```
+
+--
+
+```{r glimpse-tt-data}
+glimpse(food_consumption)  # Similar to print in base R - great to look at data
+```
+
+--
+
+|Variable      |Class     |Description |
+|:-------------|:---------|:-----------|
+|country       |character | Country Name |
+|food_category |character | Food Category |
+|consumption   |double    | Consumption (kg/person/year) |
+|co2_emmission |double    | Co2 Emission (Kg CO2/person/year) |
+
+---
+
+class: left, middle
+
+# Activity 2  (20 mins) `r emo::ji("hourglass")`
+
+.medium[ 
+- Let's start with a question - which food category has the largest CO2 emissions?
+
+- We can answer this by visualising the data!
+
+- I want you to recreate the following plot where I have done exactly this
+
+- I will post the link to the data in the MS Teams chat
+]
+
+---
+
+class: center, middle
+
+```{r food-type-emissions, echo=FALSE, message=FALSE, warning=FALSE, out.height='600px'}
+food_co2 <- food_consumption %>%
+  group_by(food_category) %>%
+  summarise(total_co2 = sum(co2_emmission))
+
+ggplot(food_co2, aes(x = reorder(food_category, total_co2), y = total_co2)) +
+  geom_col() +
+  coord_flip() +
+  theme_bw(base_size = 12) +
+  labs(x = "", y = "CO2 Emission (Kg CO2/person/year)", title = "Which food category has the highest CO2 emimssions?")
+```
+
+---
+
+`r apply_reveal("food-type-emissions-plot")`
+
+```{r food-type-emissions-plot, eval = FALSE, echo = FALSE}
+food_consumption %>%
+  group_by(food_category) %>%
+  summarise(total_co2 = sum(co2_emmission)) %>%
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +
+  geom_col() +
+  coord_flip() +
+  theme_bw(base_size = 12) +
+  labs(x = "", 
+       y = "CO2 Emission (Kg CO2/person/year)", 
+       title = "Which food category has the highest CO2 emimssions?")
+```
+
+---
+
+class: left, middle
+
+```
+# Data prep
+food_consumption %>%  # Select the data frame
+  group_by(food_category) %>%  # Group this data frame by food_category variable
+  summarise(total_co2 = sum(co2_emmission)) %>%  # Create a new summary data frame
+# Plot data
+  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  # Plot the new data frame
+  geom_col() +  # Select plot type
+  coord_flip() +  # Rotate plot 90 degrees
+  theme_bw(base_size = 12) +  # Select theme
+  labs(x = "",  # Set x-axis label to blank
+  y = "CO2 Emission (Kg CO2/person/year)",  # Set y-axis label
+  title = "Which food category has the highest CO2 emimssions?")  # Set plot title
+```
+
+---
+
+class: left, middle
+
+# Challenge
+
+.medium[
+- Produce a data visualisation of your choice from the Food CO2 we looked at today
+
+- Make it as complicated or as simple as you like
+
+- The key is to think of a question you want answer using the data
+
+- Show and discuss at the next **HARUG** meeting (2020-04-29)
+]
+
+---
+
+class: left, middle
+
+# Useful resources for my challenge!
+
+#### `r emo::ji("milky_way")` R for Data Science
+
+  - [R for Data Science](https://r4ds.had.co.nz/) - `r emo::ji("bird")` Overview of most data science topics, with great tips
+
+#### `r emo::ji("art")` Visualization in R
+
+  - [Data Visualization](https://socviz.co) - `r emo::ji("tropical_fish")` Communication oriented data visualization in R
+  - [R Graphics Cookbook](https://r-graphics.org/) - `r emo::ji("octopus")` Practical introduction to visualization with ggplot2
