@@ -91,7 +91,7 @@ background-image: url(https://d33wubrfki0l68.cloudfront.net/6f1ddb544fc5c69a2478
 background-size: 1200px
 background-position: 50% 90%
 
-# Tidy data recap `r emo::ji("broom")`
+# Tidy data - recap `r emo::ji("broom")`
 
 .medium[ 
 - Data can be presented in many different formats
@@ -116,7 +116,7 @@ background-position: 50% 90%
 
 - Turn this file into a tidy data set using the 3 rules below
 
-- Hint: data dictionaries should be in a separate tab
+- **Hint**: data dictionaries should be in a separate tab
 ]
 
 ---
@@ -264,7 +264,7 @@ food_consumption %>%  # Select the data frame
 
 class: left, middle
 
-# Next meeting 
+# Next meeting (2020-04-29)
 
 .medium[
 - We'll take a deeper dive into food consumption and CO2 emissions data set
