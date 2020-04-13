@@ -72,7 +72,13 @@ class: inverse, right, bottom
 
 class: left, middle
 
-# Learning outcomes
+# What's the plan?
+
+- Re-visit tidy data and Tidy Tuesday
+
+- Look at a real Tidy Tuesday data set
+
+- Practice visualising data 
 
 ---
 
