@@ -280,7 +280,7 @@ class: left, middle
 
 class: left, middle
 
-# I propose a challenge for the next meeting
+# I propose a challenge...
 
 .medium[
 - Produce your own data visualisation from the food-CO2 data 
@@ -300,9 +300,9 @@ class: left, middle
 
 #### `r emo::ji("milky_way")` R for Data Science
 
-  - [R for Data Science](https://r4ds.had.co.nz/) - `r emo::ji("bird")` Overview of most data science topics, with great tips
+- [R for Data Science](https://r4ds.had.co.nz/) -  Overview of most data science topics, with great tips
 
 #### `r emo::ji("art")` Visualization in R
 
-  - [Data Visualization](https://socviz.co) - `r emo::ji("tropical_fish")` Communication oriented data visualization in R
-  - [R Graphics Cookbook](https://r-graphics.org/) - `r emo::ji("octopus")` Practical introduction to visualization with ggplot2
+- [Data Visualization](https://socviz.co) - Communication oriented data visualization in R
+- [R Graphics Cookbook](https://r-graphics.org/) - Practical introduction to visualization with ggplot2
