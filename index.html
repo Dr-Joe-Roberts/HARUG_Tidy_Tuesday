@@ -25,7 +25,7 @@ background-position: 50% 10%
 
 ### Joe Roberts 
 
-#### Harper Adams R Users Group &amp;#183; 2020-04-13
+#### Harper Adams R Users Group &amp;#183; 2020-04-14
 
 ---
 
@@ -187,7 +187,7 @@ glimpse(food_consumption)  # Similar to print in base R - great to look at data
 |country       |character | Country Name |
 |food_category |character | Food Category |
 |consumption   |double    | Consumption (kg/person/year) |
-|co2_emmission |double    | Co2 Emission (Kg CO2/person/year) |
+|co2_emmission |double    | CO2 Emission (Kg CO2/person/year) |
 
 ---
 
@@ -309,7 +309,7 @@ count: false
 food_consumption %&gt;%  
   group_by(food_category) %&gt;%  
   summarise(total_co2 = sum(co2_emmission)) %&gt;%  
-* ggplot(aes(x = reorder(food_category, total_co2), y = total_co2))
+* ggplot(aes(x = food_category, y = total_co2))
 ```
 ]
 .pull-right-reveal[
@@ -323,7 +323,7 @@ count: false
 food_consumption %&gt;%  
   group_by(food_category) %&gt;%  
   summarise(total_co2 = sum(co2_emmission)) %&gt;%  
-  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  ggplot(aes(x = food_category, y = total_co2)) +  
 * geom_col()
 ```
 ]
@@ -338,7 +338,7 @@ count: false
 food_consumption %&gt;%  
   group_by(food_category) %&gt;%  
   summarise(total_co2 = sum(co2_emmission)) %&gt;%  
-  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  ggplot(aes(x = food_category, y = total_co2)) +  
   geom_col() +  
 * coord_flip()
 ```
@@ -354,10 +354,10 @@ count: false
 food_consumption %&gt;%  
   group_by(food_category) %&gt;%  
   summarise(total_co2 = sum(co2_emmission)) %&gt;%  
-  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  ggplot(aes(x = food_category, y = total_co2)) +  
   geom_col() +  
   coord_flip() +  
-* theme_bw(base_size = 12)
+* aes(reorder(food_category, total_co2))
 ```
 ]
 .pull-right-reveal[
@@ -371,9 +371,28 @@ count: false
 food_consumption %&gt;%  
   group_by(food_category) %&gt;%  
   summarise(total_co2 = sum(co2_emmission)) %&gt;%  
-  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  
+  ggplot(aes(x = food_category, y = total_co2)) +  
   geom_col() +  
   coord_flip() +  
+  aes(reorder(food_category, total_co2)) +  
+* theme_bw(base_size = 12)
+```
+]
+.pull-right-reveal[
+![](index_files/figure-html/output_food-type-emissions-plot_8-1.svg)&lt;!-- --&gt;
+]
+---
+count: false
+.pull-left-reveal[
+
+```r
+food_consumption %&gt;%  
+  group_by(food_category) %&gt;%  
+  summarise(total_co2 = sum(co2_emmission)) %&gt;%  
+  ggplot(aes(x = food_category, y = total_co2)) +  
+  geom_col() +  
+  coord_flip() +  
+  aes(reorder(food_category, total_co2)) +  
   theme_bw(base_size = 12) +  
 * labs(x = "",
 *      y = "CO2 Emission (Kg CO2/person/year)",
@@ -381,7 +400,7 @@ food_consumption %&gt;%
 ```
 ]
 .pull-right-reveal[
-![](index_files/figure-html/output_food-type-emissions-plot_10-1.svg)&lt;!-- --&gt;
+![](index_files/figure-html/output_food-type-emissions-plot_11-1.svg)&lt;!-- --&gt;
 ]
 
 
@@ -398,9 +417,10 @@ food_consumption %&gt;%  # Select the data frame
   group_by(food_category) %&gt;%  # Group this data frame by food_category variable
   summarise(total_co2 = sum(co2_emmission)) %&gt;%  # Create a new summary data frame
 # Plot data
-  ggplot(aes(x = reorder(food_category, total_co2), y = total_co2)) +  # Plot the new data frame
+  ggplot(aes(x = food_category, y = total_co2)) +  # Plot the new data frame
   geom_col() +  # Select plot type
   coord_flip() +  # Rotate plot 90 degrees
+  aes(reorder(food_category, total_co2)) +  # Re-order food categories from lowest CO2 to highest
   theme_bw(base_size = 12) +  # Select theme
   labs(x = "",  # Set x-axis label to blank
   y = "CO2 Emission (Kg CO2/person/year)",  # Set y-axis label
