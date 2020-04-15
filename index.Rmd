@@ -73,14 +73,14 @@ class: inverse, right, bottom
 
 class: left, middle
 
-# What's the plan for today?
+# What's the plan for today? `r emo::ji("coder")`
 
 .medium[
 - Re-visit 'tidy' data concept and Tidy Tuesday
 
 - Look at a real Tidy Tuesday data set
 
-- Practice visualising data 
+- Data visualisation
 ]
 
 ---
@@ -98,7 +98,7 @@ background-position: 50% 90%
 
 - Tidy data is usually the easiest format to use with R 
 
-- Core principle for the `tidyverse` suite of packages
+- Core principle for the `tidyverse` ecosystem
 ]
 
 ---
@@ -139,7 +139,7 @@ class: left, middle
 
 # What is Tidy Tuesday?
 
-> A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the `R for Data Science` textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
+> A weekly data project aimed at the R ecosystem. As this project was borne out of the R4DS Online Learning Community and the **R for Data Science** textbook, an emphasis was placed on understanding how to summarize and arrange data to make meaningful charts with `ggplot2`, `tidyr`, `dplyr`, and other tools in the `tidyverse` ecosystem.
 
 <br>
 
@@ -273,7 +273,7 @@ class: left, middle
 
 - Aim to answer some specific questions
 
-- Explore the data more with data visualisations
+- Explore the data more with more visualisations
 
 - Basic linear regression modeling
 ]
@@ -289,16 +289,16 @@ class: left, middle
 
 - Make it as complicated or as simple as you like
 
-- The key is to think of a question you want answer using the data
+- Think of a question you want answer using the data
 
-- Show and discuss at the next **HARUG** meeting (2020-04-29)
+- Show at the next **HARUG** meeting (2020-04-29)
 ]
 
 ---
 
 class: left, middle
 
-# Useful resources for my challenge!
+# Useful resources for the challenge!
 
 #### `r emo::ji("milky_way")` R for Data Science
 
