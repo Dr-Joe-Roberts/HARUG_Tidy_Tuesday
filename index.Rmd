@@ -48,7 +48,6 @@ background-image: url(https://raw.githubusercontent.com/rfordatascience/tidytues
 background-size: 1000px
 background-position: 50% 10%
 
-
 ### `r rmarkdown::metadata$author` 
 
 #### `r rmarkdown::metadata$event` &#183; `r Sys.Date()`
